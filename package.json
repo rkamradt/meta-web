@@ -1,0 +1,27 @@
+{
+  "name": "meta-web",
+  "version": "0.0.1",
+  "description": "An example web app that uses the meta-app framework",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rkamradt/meta-web.git"
+  },
+  "author": "Randal L Kamradt Sr.",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/rkamradt/meta-web/issues"
+  },
+  "homepage": "https://github.com/rkamradt/meta-web",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.4.5",
+    "meta-app": "0.0.1",
+    "morgan": "^1.5.1"
+  },
+  "devDependencies": {},
+}

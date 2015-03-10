@@ -1,0 +1,18 @@
+{
+  "models": [
+    {
+      "name": "comments",
+      "properties": [
+        {
+          "name": "author",
+          "key": true,
+          "visible": true
+        },
+        {
+          "name": "text",
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
