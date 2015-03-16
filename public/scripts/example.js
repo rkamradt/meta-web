@@ -47,9 +47,9 @@ var CommentBox = React.createClass({
       // `we'll send the ajax request right after we optimistically set the new
       // `state.
       $.ajax({
-        url: this.props.url,
+        url: this.props.url + '/' + comment.author,
         dataType: 'json',
-        type: 'PUT',
+        type: 'POST',
         data: comment,
         success: function(data) {
           this.setState({data: data});
