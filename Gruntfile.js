@@ -2,7 +2,6 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-simple-mocha');
-  grunt.loadNpmTasks('grunt-react');
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -62,15 +61,6 @@ module.exports = function(grunt) {
           src: ['Gruntfile.js', 'server.js' ]
         }
     },
-    react: {
-      files: {
-        expand: true,
-        cwd: 'jsx',
-        src: ['**/*.jsx'],
-        dest: 'dist/scripts',
-        ext: '.js'
-      }
-    },
     clean: {
       build: {
         src: [ 'dist' ]
@@ -80,12 +70,18 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-        build: {
-          expand: true,
-          cwd: 'static/',
-          src: '**',
-          dest: 'dist/',
-        }
+      build: {
+        expand: true,
+        cwd: 'static/',
+        src: '**',
+        dest: 'dist/',
+      },
+      scripts: {
+        expand: true,
+        cwd: 'client/',
+        src: '**',
+        dest: 'dist/scripts',
+      }
     },
     watch: {
       scripts: {
@@ -124,7 +120,7 @@ module.exports = function(grunt) {
         }
     }
   });
-  grunt.registerTask('build', ['jshint', 'react', 'copy:build' ]);
+  grunt.registerTask('build', ['jshint', 'copy:scripts', 'copy:build' ]);
   grunt.registerTask('default', ['express:dev', 'watch']);
   grunt.registerTask('test', ['jshint', 'simplemocha' ]);
 

@@ -12,21 +12,21 @@
 
 var converter = new Showdown.converter();
 
-var Comment = React.createClass({
+var Comment = React.createClass({displayName: "Comment",
   render: function() {
     var rawMarkup = converter.makeHtml(this.props.children.toString());
     return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-        <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
-      </div>
+      React.createElement("div", {className: "comment"}, 
+        React.createElement("h2", {className: "commentAuthor"}, 
+          this.props.author
+        ), 
+        React.createElement("span", {dangerouslySetInnerHTML: {__html: rawMarkup}})
+      )
     );
   }
 });
 
-var CommentBox = React.createClass({
+var CommentBox = React.createClass({displayName: "CommentBox",
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
@@ -69,36 +69,36 @@ var CommentBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList data={this.state.data} />
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-      </div>
+      React.createElement("div", {className: "commentBox"}, 
+        React.createElement("h1", null, "Comments"), 
+        React.createElement(CommentList, {data: this.state.data}), 
+        React.createElement(CommentForm, {onCommentSubmit: this.handleCommentSubmit})
+      )
     );
   }
 });
 
-var CommentList = React.createClass({
+var CommentList = React.createClass({displayName: "CommentList",
   render: function() {
     var commentNodes = this.props.data.map(function(comment, index) {
       return (
         // `key` is a React-specific concept and is not mandatory for the
         // purpose of this tutorial. if you're curious, see more here:
         // http://facebook.github.io/react/docs/multiple-components.html#dynamic-children
-        <Comment author={comment.author} key={index}>
-          {comment.text}
-        </Comment>
+        React.createElement(Comment, {author: comment.author, key: index}, 
+          comment.text
+        )
       );
     });
     return (
-      <div className="commentList">
-        {commentNodes}
-      </div>
+      React.createElement("div", {className: "commentList"}, 
+        commentNodes
+      )
     );
   }
 });
 
-var CommentForm = React.createClass({
+var CommentForm = React.createClass({displayName: "CommentForm",
   handleSubmit: function(e) {
     e.preventDefault();
     var author = this.refs.author.getDOMNode().value.trim();
@@ -112,16 +112,16 @@ var CommentForm = React.createClass({
   },
   render: function() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Your name" ref="author" />
-        <input type="text" placeholder="Say something..." ref="text" />
-        <input type="submit" value="Post" />
-      </form>
+      React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit}, 
+        React.createElement("input", {type: "text", placeholder: "Your name", ref: "author"}), 
+        React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}), 
+        React.createElement("input", {type: "submit", value: "Post"})
+      )
     );
   }
 });
 
 React.render(
-  <CommentBox url="comments" pollInterval={2000} />,
+  React.createElement(CommentBox, {url: "comments", pollInterval: 2000}),
   document.getElementById('content')
 );
