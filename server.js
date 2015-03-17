@@ -16,7 +16,7 @@ var mongoURL = 'mongodb://localhost:27017/myproject';
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'dist')));
  // parse application/json
 app.use(bodyParser.json());
 app.use(methodOverride());
