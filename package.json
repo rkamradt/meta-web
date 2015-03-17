@@ -20,13 +20,18 @@
   "dependencies": {
     "body-parser": "^1.4.3",
     "express": "^4.4.5",
-    "method-override": "^2.3.1",
     "meta-app": "0.2.0",
     "meta-app-mongo": "0.0.1",
     "meta-app-rest": "0.0.1",
+    "method-override": "^2.3.1",
     "morgan": "^1.5.1"
   },
   "devDependencies": {
+    "browserify": "^9.0.3",
+    "react": "^0.13.1",
+    "showdown": "^0.4.0",
+    "jquery": "^2.1.3",
+    "grunt-browserify": "^3.5.0",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "^0.11.0",

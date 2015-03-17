@@ -76,12 +76,6 @@ module.exports = function(grunt) {
         src: '**',
         dest: 'dist/',
       },
-      scripts: {
-        expand: true,
-        cwd: 'client/',
-        src: '**',
-        dest: 'dist/scripts',
-      }
     },
     watch: {
       scripts: {
@@ -106,6 +100,15 @@ module.exports = function(grunt) {
         }
       }
     },
+    browserify: {
+      client: {
+        src: ['client/example.js'],
+        dest: 'dist/js/index.js',
+        options: {
+          debug: true,
+        }
+      }
+    },
     simplemocha: {
         options: {
             globals: ['should'],
@@ -120,7 +123,7 @@ module.exports = function(grunt) {
         }
     }
   });
-  grunt.registerTask('build', ['jshint', 'copy:scripts', 'copy:build' ]);
+  grunt.registerTask('build', ['jshint', 'browserify', 'copy:build' ]);
   grunt.registerTask('default', ['express:dev', 'watch']);
   grunt.registerTask('test', ['jshint', 'simplemocha' ]);
 

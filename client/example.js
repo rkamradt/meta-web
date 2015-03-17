@@ -1,26 +1,15 @@
-/**
- * This file provided by Facebook is for non-commercial testing and evaluation purposes only.
- * Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-var converter = new Showdown.converter();
+var $ = require('jquery');
+var React = require('react');
 
 var Comment = React.createClass({displayName: "Comment",
   render: function() {
-    var rawMarkup = converter.makeHtml(this.props.children.toString());
+    var rawMarkup = this.props.children.toString();
     return (
-      React.createElement("div", {className: "comment"}, 
-        React.createElement("h2", {className: "commentAuthor"}, 
+      React.createElement("div", {className: "comment"},
+        React.createElement("h2", {className: "commentAuthor"},
           this.props.author
-        ), 
-        React.createElement("span", {dangerouslySetInnerHTML: {__html: rawMarkup}})
+        ),
+        React.createElement("span", {}, this.props.children)
       )
     );
   }
@@ -69,9 +58,9 @@ var CommentBox = React.createClass({displayName: "CommentBox",
   },
   render: function() {
     return (
-      React.createElement("div", {className: "commentBox"}, 
-        React.createElement("h1", null, "Comments"), 
-        React.createElement(CommentList, {data: this.state.data}), 
+      React.createElement("div", {className: "commentBox"},
+        React.createElement("h1", null, "Comments"),
+        React.createElement(CommentList, {data: this.state.data}),
         React.createElement(CommentForm, {onCommentSubmit: this.handleCommentSubmit})
       )
     );
@@ -85,13 +74,13 @@ var CommentList = React.createClass({displayName: "CommentList",
         // `key` is a React-specific concept and is not mandatory for the
         // purpose of this tutorial. if you're curious, see more here:
         // http://facebook.github.io/react/docs/multiple-components.html#dynamic-children
-        React.createElement(Comment, {author: comment.author, key: index}, 
+        React.createElement(Comment, {author: comment.author, key: index},
           comment.text
         )
       );
     });
     return (
-      React.createElement("div", {className: "commentList"}, 
+      React.createElement("div", {className: "commentList"},
         commentNodes
       )
     );
@@ -112,9 +101,9 @@ var CommentForm = React.createClass({displayName: "CommentForm",
   },
   render: function() {
     return (
-      React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit}, 
-        React.createElement("input", {type: "text", placeholder: "Your name", ref: "author"}), 
-        React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}), 
+      React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit},
+        React.createElement("input", {type: "text", placeholder: "Your name", ref: "author"}),
+        React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}),
         React.createElement("input", {type: "submit", value: "Post"})
       )
     );
