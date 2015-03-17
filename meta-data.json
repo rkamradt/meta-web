@@ -4,9 +4,14 @@
       "name": "comments",
       "properties": [
         {
-          "name": "author",
+          "name": "id",
           "key": true,
           "visible": true
+        },
+        {
+          "name": "author",
+          "visible": true,
+          "type": "email"
         },
         {
           "name": "text",

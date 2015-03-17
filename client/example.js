@@ -1,5 +1,24 @@
 var $ = require('jquery');
 var React = require('react');
+var metaAppFactory = require('meta-app');
+
+var commentModel; // filled in when app starts
+
+$.ajax({
+  url: 'metadata',
+  dataType: 'json',
+  success: function(data) {
+    console.log('found metadata: ' + data);
+    commentModel = metaAppFactory(data).getModel('comments');
+    React.render(
+      React.createElement(CommentBox, {url: "comments", pollInterval: 2000}),
+      document.getElementById('content')
+    );
+  }.bind(this),
+  error: function(xhr, status, err) {
+    console.error(this.props.url, status, err.toString());
+  }.bind(this)
+});
 
 var Comment = React.createClass({displayName: "Comment",
   render: function() {
@@ -29,6 +48,7 @@ var CommentBox = React.createClass({displayName: "CommentBox",
     });
   },
   handleCommentSubmit: function(comment) {
+    comment.id = Math.floor(Math.random() * (100000)); // use a random number for a key
     var comments = this.state.data;
     comments.push(comment);
     this.setState({data: comments}, function() {
@@ -102,15 +122,10 @@ var CommentForm = React.createClass({displayName: "CommentForm",
   render: function() {
     return (
       React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit},
-        React.createElement("input", {type: "text", placeholder: "Your name", ref: "author"}),
+        React.createElement("input", {type: commentModel.getProperty('author').getType(), placeholder: "Your email", ref: "author"}),
         React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}),
         React.createElement("input", {type: "submit", value: "Post"})
       )
     );
   }
 });
-
-React.render(
-  React.createElement(CommentBox, {url: "comments", pollInterval: 2000}),
-  document.getElementById('content')
-);
